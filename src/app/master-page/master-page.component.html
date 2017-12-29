@@ -1,0 +1,53 @@
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header" data-background-color="red">
+                      <h4 class="title">Master Page</h4>
+                      <p class="category">This section allows you to to change the parameters.</p>
+                  </div>
+                  <div class="card-content table-responsive" >
+                     
+                      <div class="row">
+                          
+
+                      </div>
+                      <div class="card-content table-responsive">
+                                    
+                         <table>
+                           <tr>
+                             <td>
+                              <b>  Date:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             </td>
+                             <td>
+                                <input type="text" name="reportdate" [(ngModel)]="reportsdate">
+                             </td>
+                         
+                           </tr>
+                          </table>
+                          <br/> 
+                          <table>
+                           <tr>
+                             <td>
+                                <b>  Doc No.:</b>&nbsp;&nbsp;&nbsp;
+                             </td>
+                             <td>
+                                <input type="text" name="docno" [(ngModel)]="docnumber">
+                             </td>
+                           </tr>
+                       
+                          </table>
+                          <br/>
+                          <div> <button type="submit" style="margin-top:0px;height:35px;text-align:center" class="btn btn-danger" (click)="onSave()">Save</button></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <app-dialog [(visible)]="showDialog">
+        <h1>Data Saved</h1>
+        <button (click)="showDialog = !showDialog" class="btn">Close</button>
+      </app-dialog>
+  </div>
+</div>

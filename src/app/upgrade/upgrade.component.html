@@ -1,0 +1,197 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" *ngIf="reportlist">
+                    <div class="card-header" data-background-color="red">
+                        <h4 class="title">Email Report</h4>
+                        <p class="category">This component incorporates email logs with their current status.</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="table-responsive table-upgrade">
+                                <table class="table">
+                                    <tr>
+                                        <td>  
+                                            <span class="tim-note" style="color: black;"> Select Date Range </span>
+                                            &nbsp;
+                                            <my-date-range-picker name="mydaterange" [options]="myDateRangePickerOptions"
+                                                [(ngModel)]="model" required>
+                                            </my-date-range-picker>
+
+                                        </td>
+                                        <td>
+                                                    
+                                                <span class="tim-note" style="color: black;"> Department </span>
+                                                
+                                                <select style="width:40%" [(ngModel)]="dept">
+                                                    <option *ngFor="let dept of departments" [ngValue]="dept.Dept_ID ">{{ dept.DepartmentName }}</option>                                    
+                                                </select>
+                                                     
+                                        </td>
+                                        <td>  <button type="submit" class="btn btn-danger pull-right" (click)="onSearch()"> Search </button></td>
+                                    </tr>            
+                                </table>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">ID</th>
+                                        <th class="text-center">Observations</th>
+                                        <th class="text-center">Department</th>
+                                        <th class="text-center">Priority</th>
+                                        <th class="text-center">Escalation Level</th>
+                                        <th class="text-center"> Date </th>
+                                        <th class="text-center"> Change Status </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let report of emaillogs | paginate: { itemsPerPage: 5, currentPage: p }; let i=index;">
+                                        <td>{{i+1}}</td>
+                                        <td class="text-center">{{ report.ChecklistObservation }}</td>
+                                        <td class="text-center">{{ report.DepartmentName }}</td>
+                                        <td class="text-center"> {{ report.PName }} </td>
+                                        <td class="text-center">{{ report.EscalationLevel }}</td>
+                                        <td>
+                                           {{ report.EscalatedDate }}
+                                        </td>
+                                        <td> <button type="button" rel="tooltip" title="Edit Task" (click)="onChangeStatus(report.EmailReportID)" class="btn btn-primary btn-simple btn-xs">
+                                                <i class="material-icons">edit</i>
+                                             </button>
+                                        </td>
+                                    </tr>
+                                   
+                                </tbody>
+                            </table>
+                            <pagination-controls (pageChange)="p = $event" ></pagination-controls>
+                        </div>
+                        <!-- <button (click)="onExcelclick()"> Export to PDF </button> </div> -->
+                        <button type="submit" class="btn btn-danger pull-right" (click)="onExcelclick()"> Download Report </button>
+                    </div>
+                </div>
+            </div>
+      
+    
+    <!-- <div *ngIf="statuschange">
+            
+        <div class=" card card-header text-center" style="background-color:red;color:white">
+                    <h4 class="title">Escalated Observation Details</h4>
+                    <p class="title">The escalated observation details are shown.</p>
+                </div>
+        <div class="card">
+            <table *ngFor="let report of emaillogs;" class="table">
+            <tr >
+                <td style="font-weight:bold;"> Observation </td> <td>{{report.ChecklistObservation}}</td>
+            </tr>
+            <tr>
+                <td  style="font-weight:bold;">
+                    Department Name
+                </td>
+                <td> {{ report.DepartmentName }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;"> Priority  </td>
+                <td>
+                        {{ report.PName }}
+                </td>
+            </tr>
+            <tr>
+                <td  style="font-weight:bold;">
+                    Escalation Level 
+                </td>
+                <td>
+                    {{report.EscalationLevel}} 
+                </td>
+            </tr>
+            <tr>
+                <td  style="font-weight:bold;">
+                    Escalated Date
+                </td> 
+                <td>
+                    {{ report.EscalatedDate }}
+                </td>
+            </tr>
+        </table>
+        <button type="submit" class="btn btn-danger pull-right" (click)="onDelayed(report.EmailReportID)" >Delay Escalation</button>
+        <button type="submit" class="btn btn-danger pull-right" (click)="onCloseEscalation(report.EmailReportID)" >Close Escalation</button>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" *ngIf="statuschange">
+            <div class="card-header" data-background-color="red">
+                <h4 class="title">Email Report</h4>
+                <p class="category">This component incorporates email logs with their current status.</p>
+            </div>
+            <div class="card-content">
+                   
+                <div class="table-responsive table-upgrade">
+                   
+                    
+                        <table *ngFor="let report of emaillogs;" class="table">
+                        <tbody>
+                            <tr>
+                                    <td style="font-weight:bold;"> Observation </td> <td>{{report.ChecklistObservation}}</td>
+                            </tr>
+                            <tr>
+                                    <td  style="font-weight:bold;">
+                                            Department Name
+                                    </td>
+                                    <td> {{ report.DepartmentName }}</td>
+                            </tr>
+                            <tr>
+                                    <td style="font-weight:bold;"> Priority  </td>
+                                    <td>
+                                            {{ report.PName }}
+                                    </td>
+                            </tr>
+                            <tr>
+                                    <td  style="font-weight:bold;">
+                                        Escalation Level 
+                                    </td>
+                                    <td>
+                                        {{report.EscalationLevel}} 
+                                    </td>
+                            </tr>
+                            <tr>
+                                    <td  style="font-weight:bold;">
+                                        Escalated Date
+                                    </td> 
+                                    <td>
+                                        {{ report.EscalatedDate }}
+                                    </td>
+                                </tr><tr>
+                                    <td  style="font-weight:bold;">
+                                        Escalation Status
+                                    </td>
+                                    <td>{{ report.EscalationStatus }} </td>
+                                </tr>
+                        </tbody>
+                </table>
+                </div>
+               <div *ngIf="checkdelayed(emaillogs[0].EscalationStatus)">
+                    <button type="submit" class="btn btn-danger pull-right" (click)="onDelayed(emaillogs[0].EmailReportID,1)"> Open Escalation </button>
+               </div>
+               <div *ngIf="!checkdelayed(emaillogs[0].EscalationStatus)">
+                    <button type="submit" class="btn btn-danger pull-right" (click)="onDelayed(emaillogs[0].EmailReportID,2)"> Delay Escalation </button>
+               </div>
+              <div *ngIf="checkEscalation(emaillogs[0].EscalationStatus)">
+                <button type="submit" class="btn btn-danger pull-right" (click)="onDelayed(emaillogs[0].EmailReportID,0)"> Close Escalation </button>
+              </div>
+               
+            </div>
+        </div>
+        </div>
+
+        <div *ngIf="loading" >
+            <div class="pokeball">
+              <div class="upper">
+                <div class="inner"></div>
+              </div>
+              <div class="middle"></div>
+              <div class="lower">
+                <div class="inner"></div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

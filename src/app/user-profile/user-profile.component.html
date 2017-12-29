@@ -1,0 +1,228 @@
+<div class="main-content">
+<div class="container-fluid" >
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header" data-background-color="red">
+                    <h4 class="title">User Profile</h4>
+                    <p class="category">Manage your Users</p>
+                </div>
+                <div class="card-content">
+                    <form [formGroup]="adduserForm" (ngSubmit)="onAddUser()">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <label class="control-label">Department (Apron Control)</label>
+                                    <input type="text" class="form-control" disabled formControlName="department">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <!-- <label class="control-label"></label> -->
+                                    <input type="text" class="form-control" formControlName="username" placeholder="Username">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <!-- <label class="control-label">Password</label> -->
+                                    <input type="password" class="form-control" formControlName="password" placeholder="Password">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <!-- <label class="control-label">Fist Name</label> -->
+                                    <input type="text" class="form-control" formControlName="firstname" placeholder="First Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <!-- <label class="control-label">Last Name</label> -->
+                                    <input type="text" class="form-control" formControlName="lastname" placeholder="Last Name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <!-- <label class="control-label">Email Id</label> -->
+                                    <input type="email" class="form-control" formControlName="emailid" placeholder="Email Id">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="radio" style="transform: scale(1.5);" formControlName="profileoptionRadio" value="1" checked>
+                                </label>&nbsp;&nbsp;
+                                <label style="color: black;">Duty Operator</label>
+                                &nbsp;&nbsp;
+                            
+                                <label>
+                                    <input type="radio" style="transform: scale(1.5);" formControlName="profileoptionRadio" value="2">
+                                </label>&nbsp;&nbsp;
+                                <label style="color: black;">Duty Manager</label>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <label class="control-label">City</label>
+                                    <input type="text" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <label class="control-label">Country</label>
+                                    <input type="text" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <label class="control-label">Postal Code</label>
+                                    <input type="text" class="form-control" >
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <!-- <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>About Me</label>
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
+                                        <textarea class="form-control" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <button type="submit" class="btn btn-danger pull-right" [disabled]="!adduserForm.valid">Add User</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- <div class="card card-profile">
+                <div class="card-avatar">
+                    <a href="#pablo">
+                        <img class="img" src="../assets/img/faces/dheeraj.jpg" />
+                    </a>
+                </div>
+
+                <div class="content">
+                    <h6 class="category text-gray">Dheeraj Anchan</h6>
+                    <h4 class="card-title">Project Manager - Cloud</h4>
+                    <p class="card-content">
+                        The path to the CEO's office should not be through the CEO's office and it should not be through the marketing department. It needs to be through engineering and design.
+                    </p>
+                    <a href="https://www.linkedin.com/in/dheeraj-anchan-55399a99/" class="btn btn-danger btn-round">Know more about him</a>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" data-background-color="red">
+                    <h4 class="title">User Table</h4>
+                    <p class="category">An interface to edit/delete your users</p>
+                </div>
+                <div class="card-content table-responsive">
+                    <table class="table">
+                        <thead class="text-danger">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Email Id</th>
+                                <th>UserName</th>
+                                <th>Modify Records</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of users  | paginate: { itemsPerPage: 5, currentPage: p }; let i=index;" >
+                                <td>{{ i+1 }}</td>
+                                <td>{{ user.Name }}</td>
+                                <td>{{ user.EMAIL_ID }}</td>
+                                <td class="text-danger">{{ user.UM_USER_NAME }}</td>
+                                <td class="td-actions text-right">
+                                    <button type="button" rel="tooltip" title="Edit Task" (click)="onUserEdit(user.UM_I)" class="btn btn-primary btn-simple btn-xs">
+                                        <i class="material-icons">edit</i>
+                                    </button>
+                                    <button type="button" rel="tooltip" title="Remove" (click)="onUserDelete(user.UM_I)" class="btn btn-danger btn-simple btn-xs">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </td>
+                            </tr>                          
+                        </tbody>
+                    </table>
+                    <pagination-controls (pageChange)="p = $event" ></pagination-controls>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-12">
+            <div class="card" *ngIf="statuschange">
+                <div class="card-header" data-background-color="red">
+                    <h4 class="title">User Account Information</h4>
+                    <p class="category">This component incorporates user account information.</p>
+                </div>
+
+                <div class="card-content">
+                    <div class="table-responsive table-upgrade">
+
+                        <table *ngFor="let user of getUserById;" class="table">
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: bold;"> 
+                                        Name 
+                                    </td>
+                                    <td> <input type="text" name="{{ 'firstname' }}" [(ngModel)]="user.Name"> </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        Email ID
+                                    </td>
+                                    <td> <input type="text" name="{{ 'emailid' }}" [(ngModel)]="user.EMAIL_ID"> </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold;">
+                                        Username
+                                    </td>
+                                    <td> <input type="text" name="{{ 'username' }}" [(ngModel)]="user.UM_USER_NAME"> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <button type="submit" class="btn btn-danger pull-right" (click)="editUserInfo(user.UM_I)"> Confirm Edit Action </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-dialog [(visible)]="showDialog">
+        <h1>Data Saved Successfully!</h1>
+        <button (click)="showDialog = !showDialog" class="btn">Exit</button>
+    </app-dialog>
+</div>
+            <div *ngIf="!loading" >
+                <div class="pokeball">
+                  <div class="upper">
+                    <div class="inner"></div>
+                  </div>
+                  <div class="middle"></div>
+                  <div class="lower">
+                    <div class="inner"></div>
+                  </div>
+                </div>
+            </div>
+    
+</div>

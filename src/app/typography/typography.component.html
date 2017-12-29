@@ -1,0 +1,54 @@
+<div class="main-content">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" data-background-color="red">
+                    <h4 class="title">Send Mail</h4>
+                    <p class="category">Send Notification to concern departments for solving the issue </p>
+                </div>
+                <div class="card-content">
+                    <div id="typography">
+                        <!-- <div class="title">
+                            <h2>Send Email </h2>
+                        </div> -->
+                        <br />
+                        <br />
+                        <div class="row">
+                             <div class="tim-typo">
+                                    <span class="tim-note" style="color: black;"> Department </span>
+                                    <select style="width:20%" [(ngModel)]="dept">
+                                        <option *ngFor="let dept of departments" [ngValue]="dept.Dept_ID ">{{ dept.DepartmentName }}</option>                                    
+                                    </select>
+                             </div>
+                            <div class="tim-typo">
+                            <span class="tim-note" style="color: black;">Priority</span>  
+                            <select style="width:20%"  [(ngModel)]="priority" >
+                                    <option *ngFor="let item of prioritylist" [ngValue]="item.PriorityID ">{{ item.PName }}</option>
+                                  
+                                </select> 
+                            </div>
+                            <div class="tim-typo">
+                                <span class="tim-note" style="color: black;">Email Text</span>  
+                                <textarea style="float:right; min-width: 100%; max-width: 100%;" rows="4" cols="50"  [(ngModel)]="txtobservations"></textarea>
+                                <br/>
+                                <br/>
+                            </div>
+                         
+                            <div class="tim-typo">
+                            <button style="padding-top: 20px;" class="btn btn-danger" (click)="sendEmail()"> Send Email</button>
+                            </div>
+                           
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-dialog [(visible)]="showDialog">
+                <h1>Mail Sent</h1>
+                <button (click)="showDialog = !showDialog" class="btn">Close</button>
+              </app-dialog>
+    </div>
+</div>
+</div>

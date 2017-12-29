@@ -1,0 +1,253 @@
+
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+            <div class="card"  *ngIf="myVar">
+                  <div class="card-header" data-background-color="red">
+                      <h4 class="title">Approved Checklist Reports</h4>
+                      <!-- <p class="category"><a target="_blank" href="https://design.google.com/icons/">Google</a></p> -->
+                  </div>
+                  <div class="card-content  table-responsive">
+                    
+                          <!-- <iframe src="https://design.google.com/icons/">
+                              <p>Your browser does not support iframes.</p>
+                          </iframe> -->
+                          <div class="row">
+                          <div class="col-md-5">
+                              <div class="form-group form-black label-floating is-empty">
+                                  <label class="control-label" style="color: black;">Checklist Type</label>
+                                  <!-- <input type="text" class="form-control" disabled> -->
+                              </div>
+                          </div>
+                          <div class="col-md-3">
+                          <div class="form-group form-black label-floating is-empty">
+                              
+                             <select  [(ngModel)]="checklisttype" style="  padding: 5px 8px;
+                                                                           width: 100%;
+                                                                           box-shadow: none;
+                                                                           background: transparent;
+                                                                           background-image: none;
+                                                                           -webkit-appearance: none;">
+                           
+                                 <option [ngValue]="1"> Runway Checklist </option>
+                                 <option [ngValue]="2"> Taxiway Checklist </option>
+                                 <option [ngValue]="3"> Apron Checklist </option>
+                            </select>
+                           </div>
+                          </div>
+                       <div class="col-md-4">
+                           <div class="form-group form-black label-floating is-empty" >
+                                     
+                                   <button type="submit" style="margin-top:0px;height:35px;text-align:center" (click)="onChecklistSelect()" class="btn btn-danger">Submit</button>
+                                   </div>
+                               </div>
+                          </div>
+                               <div class="card-content table-responsive" *ngIf="list">
+                                  
+                              <button *ngFor="let item of runwaylist | paginate: { itemsPerPage: 5, currentPage: p };"  (click)="onSubmit(item.DATE,item.Inspection_Time)" style="background-color:white;width:100%;height:50px; text-align:left">
+                            
+                                  <b>Date: </b>&nbsp;&nbsp;
+                                  {{ item.DATE  }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                 <b>Time: </b> &nbsp;&nbsp;
+                                  {{ item.Inspection_Time }}
+                                  
+                                  
+                              </button>
+                              <pagination-controls (pageChange)="p = $event" ></pagination-controls>
+                         
+                              
+                          </div>
+                         
+                     </div>
+                 </div>
+             </div>
+                              <div class="col-md-12">
+                              <div class="card card-plain" *ngIf="checklistreport">
+                                  <div class="card-header" data-background-color="red">
+                                      <h4 class="title">Report Template</h4>
+                                      <p class="category">This section provides analytical view of airside reports</p>
+                                  </div>
+                                  
+                                  <div class="card-content table-responsive"  >
+                                                      
+                                      <table class="table table-hover">
+                                          <thead>
+                                              <tr>
+                                                  <th style="width:10%; font-weight:bold; text-align:center">ID</th>
+                                                  <th  style="width:25%;font-weight:bold; text-align:center">Observations</th>
+                                                  <th style="width:10%;font-weight:bold; text-align:center">Acceptability</th>
+                                                  <th style="width:15%;font-weight:bold; text-align:center">Nc Filed Ref No.</th>
+                                                  <th style="width:40%;font-weight:bold; text-align:center">Action Taken</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr *ngFor="let user of checklistdetails; let i=index">
+                                                      <td style="width:10%; text-align:center">{{i+1}}</td>
+                                                  <td style="width:25%; text-align:center"> {{ user.Observations }}</td>
+                                                  <td style="width:10%; text-align:center" [ngSwitch]="user.Acceptability"> <p *ngSwitchCase="'+'" style=" background-color: rgb(59, 152, 79);">{{ user.Acceptability }}</p> 
+                                                      <p *ngSwitchCase="'-'" style=" background-color: rgb(241, 8, 8);">{{ user.Acceptability }}</p> 
+                                                      <p *ngSwitchCase="'0'" style=" background-color: rgb(207, 250, 53);">{{ user.Acceptability }}</p>
+                                                    </td>
+                                                  <td style="width:15%; text-align:center"> {{ user.NC_Filed_Ref_No }}</td>
+                                                  <td style="width:40%;text-align:center">{{user.Action_Taken}}</td>
+                                                  
+                                              </tr>
+                                             
+                                          </tbody>
+
+                                      </table>
+                                   </div>
+                                   <div>
+                                    <span style="float:left; font-weight:bold;">Name of Safety Officier</span> <p style="float:left">&nbsp;&nbsp; &nbsp;&nbsp;{{ checklistdetails[0].Person_Name }}</p>
+                                </div>
+                                
+                                <br />
+                                <br />
+                                <div>
+                                    <span style="float:left; font-weight:bold;">Name of Approved Officier</span> <p style="float:left">&nbsp;&nbsp; &nbsp;&nbsp;{{ checklistdetails[0].ApprovedBy }}</p>
+                                </div>
+                                
+                                <br />
+                                <br />
+                                <div>
+                                   <span style="float:left; font-weight:bold;">Other Observations</span> <p style="float:left">&nbsp;&nbsp; &nbsp;&nbsp;{{ checklistdetails[0].Other_Observations }}</p>
+                                </div>
+
+                                   <button type="submit" class="btn btn-danger pull-right" (click)="onCancelclick()">Cancel </button> <button type="submit" class="btn btn-danger pull-right" (click)="onExcelclick()"> Download Report </button>
+            </div>  
+            </div>   
+            <div class="col-md-12">         
+            <div class="card card-plain" *ngIf="edited">
+              <div class="card-header" data-background-color="red">
+                  <h4 class="title">Report Template</h4>
+                  <p class="category">This section provides analytical view of airside reports</p>
+              </div>
+              <div class="card-content table-responsive"  >
+                  <table class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th style="width:10%; font-weight:bold; text-align:center">ID</th>
+                              <th  style="width:10%;font-weight:bold; text-align:center">Stand</th>
+                              <th style="width:20%;font-weight:bold; text-align:center">Surface Condition</th>
+                              <th style="width:10%;font-weight:bold; text-align:center">Markings</th>
+                              <th style="width:10%;font-weight:bold; text-align:center">Cleaning</th>
+                              <th style="width:20%;font-weight:bold; text-align:center">Serviceability</th>
+                              <th style="width:20%;font-weight:bold; text-align:center">Action Taken</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let view of checklistdetails; let i=index">
+                              <td style="width:10%; text-align:center"> {{ i+1 }} </td>
+                              <td style="width:10%; text-align:center"> {{ view.Stand }} </td>
+                              <td style="width:20%; text-align:center"> {{ view.Surface_Condition }} </td>
+                              <td style="width:10%; text-align:center"> {{ view.Markings }}</td>
+                              <td style="width:10%;text-align:center"> {{ view.Cleaning }} </td>
+                              <td style="width:20%;text-align:center"> {{ view.Serviceability }} </td>
+                              <td style="width:20%;text-align:center"> {{ view.ActionTaken }} </td>   
+                          </tr>                                   
+                      </tbody>
+                  </table>
+                  <br />
+
+                  <div>
+                      <span style="float:left; font-weight:bold;">Name of Safety Officier</span> <p style="float:left">&nbsp;&nbsp; &nbsp;&nbsp;{{ checklistdetails[0].OfficierName }}</p>
+                  </div>
+                  
+                  <br />
+                  <br />
+                  <div>
+                    <span style="float:left; font-weight:bold;">Name of Approved Officier</span> <p style="float:left">&nbsp;&nbsp; &nbsp;&nbsp;{{ checklistdetails[0].ApprovedBy }}</p>
+                </div>
+                
+                <br />
+                <br />
+                  <div>
+                     <span style="float:left; font-weight:bold;">Other Observations</span> <p style="float:left">&nbsp;&nbsp; &nbsp;&nbsp;{{ checklistdetails[0].Other_Observations }}</p>
+                  </div>
+                  <div>
+                       <!-- <br>    <button type="submit" class="btn btn-danger pull-right" (click)="EditChecklist()" >Edit</button> -->
+                 <button type="submit" class="btn btn-danger pull-right"(click)="onPdfDownload()"> Download </button>
+                 <button type="submit" class="btn btn-danger pull-right"(click)="onApronCancel()"> Cancel </button>
+                  </div>
+              </div>
+              </div>
+              <div id="divhide" style="background-color: white; margin-top: 20%; border: white" *ngIf="hide" >
+                  <table style=" border: 1px solid black; font:'verdana'; font-size:14px;border-collapse: collapse ; background-color:white; width:90%; margin-left: 3%; margin-right:5%; ">
+                      <thead>
+                      <tr>
+                          <th style="width:29%;border: 1px solid black; text-align:center">
+                              Mumbai <br> International Airport <br > Pvt. Ltd
+                          </th>
+                          <th style="width:29% ;font:'verdana';font-size:15px; text-align:center">
+                              RUNWAY/ TAXIWAY INSPECTION CHECKLIST <hr style="border:0.7px solid black"> Department: ASM
+                          </th>
+                          <th style="width:36%;border: 1px solid black; text-align:center">
+                              Doc. No.: MIAL/AO-ASM/FMT/01/05<br> Date:-{{checklistdetails[0].Date | slice:0:10 }}
+                          </th>
+                      </tr>
+                      </thead>
+                  </table>
+                  <br>
+                  <div style="margin-left: 3%; margin-right:10%; font-size:18px;">
+                    <p style="text-align:center;"><b> {{checklistname }} </b></p>  <br>
+                    <b>  Date:</b> &nbsp;&nbsp;&nbsp;&nbsp; {{checklistdetails[0].Date | slice:0:10 }}
+                    <br>
+                    <br>
+                   <span style="float:left"> <b> RWY/TWY inspected: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{ checklistdetails[0].RWY_Inspected }} {{ checklistdetails[0].TWY_Inspected }}</span>
+                    <span style="float:right" ><b>Time of Inspection</b> &nbsp;&nbsp;&nbsp;&nbsp; {{checklistdetails[0].Inspection_Time}} </span>
+                    <br><br>
+                    <span>Dawn / Morning / Afternoon / Dusk /Ad-hoc </span>
+                  </div>
+                
+
+                      </div>
+
+
+
+                      <div id="divapron" style="background-color: white; margin-top: 20%; border: white" *ngIf="apronheader" >
+                        <table style=" border: 1px solid black; font:'verdana'; font-size:14px;border-collapse: collapse ; background-color:white; width:90%; margin-left: 3%; margin-right:5%; ">
+                            <thead>
+                            <tr>
+                                <th style="width:29%;border: 1px solid black; text-align:center">
+                                    Mumbai <br> International Airport <br > Pvt. Ltd
+                                </th>
+                                <th style="width:29% ;font:'verdana';font-size:15px; text-align:center">
+                                    APRON INSPECTION CHECKLIST <hr style="border:0.7px solid black"> Department: ASM
+                                </th>
+                                <th style="width:36%;border: 1px solid black; text-align:center">
+                                    Doc. No.: MIAL/AO-ASM/FMT/01/05<br> Date:- {{checklistdetails[0].Date }} 
+                                </th>
+                            </tr>
+                            </thead>
+                        </table>
+                        <br>
+                        <div style="margin-left: 3%; margin-right:10%; font-size:18px;">
+                          <p style="text-align:center;"><b> {{checklistname }} </b></p>  <br>
+                         
+                          <br>
+                         <span style="float:left"> <b> Date: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{checklistdetails[0].Date }}</span>
+                          <span style="float:right" ><b>Time of Inspection</b> &nbsp;&nbsp;&nbsp;&nbsp; {{checklistdetails[0].Inspection_Time}} </span>
+                          <br><br>
+                          <span>Dawn / Morning / Afternoon / Dusk /Ad-hoc </span>
+                        </div>
+                      
+      
+                            </div>
+                      </div>
+                     
+                  </div>
+              </div>
+              <div *ngIf="loading" >
+                <div class="pokeball">
+                  <div class="upper">
+                    <div class="inner"></div>
+                  </div>
+                  <div class="middle"></div>
+                  <div class="lower">
+                    <div class="inner"></div>
+                  </div>
+                </div>
+            </div>
+          </div>
+     
